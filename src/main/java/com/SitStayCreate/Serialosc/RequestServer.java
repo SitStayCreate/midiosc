@@ -72,7 +72,7 @@ public class RequestServer {
         //build oscArgs
         ArrayList oscArgs = new ArrayList();
         oscArgs.add(monomeController.getId());
-        oscArgs.add("128"); //used to be Dimensions class method GetArea()
+        oscArgs.add("monome " + ((GridController)monomeController).getDimensions().getArea());
         oscArgs.add(decoratedOSCPortIn.getPortIn());
         //send response to each MonomeApp in the list
         for(MonomeApp monomeApp : monomeApps){
@@ -119,7 +119,7 @@ public class RequestServer {
                 //build up oscArgs
                 ArrayList oscArgs = new ArrayList();
                 oscArgs.add(gridController.getId());
-                oscArgs.add(gridController.getDimensions().getArea()); //used to be Dimensions class method GetArea()
+                oscArgs.add("monome " + gridController.getDimensions().getArea()); //used to be Dimensions class method GetArea()
                 oscArgs.add(decoratedOSCPortIn.getPortIn());
 
                 sendResponse(monomeApp,
