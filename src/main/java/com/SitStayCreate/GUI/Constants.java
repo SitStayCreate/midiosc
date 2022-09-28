@@ -44,6 +44,4 @@ public class Constants {
     //DTPANE
     final static int DTPANEWIDTH = 300;
     final static int DTPANEHEIGHT = 100;
-
-    final static String ERRORLABEL = "Unavailable port";
 }

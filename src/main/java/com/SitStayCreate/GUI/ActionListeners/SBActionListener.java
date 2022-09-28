@@ -18,6 +18,7 @@ public class SBActionListener implements ActionListener {
     private MidiPanel midiPanel;
     private RequestServer requestServer;
     private DTPane devicePane;
+    private final static String ERRORLABEL = "Unavailable port";
 
     public SBActionListener(GridPanel gridPanel,
                             MidiPanel midiPanel,
@@ -38,7 +39,7 @@ public class SBActionListener implements ActionListener {
         //Check that the port is not already in use, if it is, do not create a device
         for(MonomeController controller : controllers){
             if(controller.getDecoratedOSCPortIn().getPortIn() == portIn){
-                gridPanel.setErrorLabel("Unavailable port");
+                gridPanel.setErrorLabel(ERRORLABEL);
                 return;
             }
         }
