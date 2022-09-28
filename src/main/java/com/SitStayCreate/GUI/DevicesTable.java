@@ -39,12 +39,12 @@ public class DevicesTable extends JPanel implements Scrollable {
 
         //Add header row
         JLabel[] headers = new JLabel[]{
-            new JLabel("Drop"),
-            new JLabel("ID"),
-            new JLabel(" Size "),
-            new JLabel("Port In"),
-            new JLabel("Inverted"),
-            new JLabel("Ch")
+            new JLabel(Constants.DROPLABEL),
+            new JLabel(Constants.IDCOLUMNLABEL),
+            new JLabel(Constants.SIZECOLUMNLABEL),
+            new JLabel(Constants.PORTINCOLUMNLABEL),
+            new JLabel(Constants.INVERTEDCOLUMNLABEL),
+            new JLabel(Constants.CHLABEL)
         };
 
         for(JLabel header : headers){
@@ -67,12 +67,12 @@ public class DevicesTable extends JPanel implements Scrollable {
         constraints.gridy = yConstraint;
 
         JComponent[] components = new JComponent[6];
-        JButton deleteButton = new JButton("X");
+        JButton deleteButton = new JButton(Constants.DELETELABEL);
         deleteButton.setPreferredSize(new Dimension(15, 15));
         deleteButton.addActionListener(new DropActionListener(this, grid));
         components[0] = deleteButton;
         components[1] = new JLabel(grid.getId());
-        components[2] = new JLabel(dims.getWidth() + "x" + dims.getHeight());
+        components[2] = new JLabel(dims.getWidth() + Constants.DEVICEDIMSLABEL + dims.getHeight());
         components[3] = new JLabel(String.valueOf(grid.getDecoratedOSCPortIn().getPortIn()));
         components[4] = new JLabel(String.valueOf(dims.isInverted()));
         components[5] = new JLabel(String.valueOf(grid.getHardwareDevice().getChannel() + 1));
@@ -100,15 +100,15 @@ public class DevicesTable extends JPanel implements Scrollable {
         constraints.gridy = yConstraint;
 
         JComponent[] components = new JComponent[6];
-        JButton deleteButton = new JButton("X");
+        JButton deleteButton = new JButton(Constants.DELETELABEL);
         deleteButton.setPreferredSize(new Dimension(15, 15));
         deleteButton.addActionListener(new DropActionListener(this, grid));
         components[0] = deleteButton;
         components[1] = new JLabel(grid.getId());
-        components[2] = new JLabel(dims.getWidth() + "x" + dims.getHeight());
+        components[2] = new JLabel(dims.getWidth() + Constants.DEVICEDIMSLABEL + dims.getHeight());
         components[3] = new JLabel(String.valueOf(grid.getDecoratedOSCPortIn().getPortIn()));
         components[4] = new JLabel(String.valueOf(dims.isInverted()));
-        components[5] = new JLabel("X");
+        components[5] = new JLabel(Constants.DELETELABEL);
 
         for(JComponent component : components){
             constraints.gridy = yConstraint;
@@ -133,7 +133,7 @@ public class DevicesTable extends JPanel implements Scrollable {
 
     @Override
     public Dimension getPreferredScrollableViewportSize() {
-        return new Dimension(300, 50);
+        return new Dimension(Constants.VIEWPORTWIDTH, Constants.VIEWPORTHEIGHT);
     }
 
     @Override

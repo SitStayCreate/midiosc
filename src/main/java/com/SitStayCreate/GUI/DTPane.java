@@ -11,7 +11,7 @@ public class DTPane extends JScrollPane {
 
     public DTPane(DevicesTable devicesTable) {
         super(devicesTable);
-        setMaximumSize(new Dimension(300, 100));
+        setMaximumSize(new Dimension(Constants.DTPANEWIDTH, Constants.DTPANEHEIGHT));
         getViewport().setBackground(Color.GRAY);
         this.devicesTable = devicesTable;
     }

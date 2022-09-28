@@ -38,7 +38,7 @@ public class GridPanel extends JPanel {
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
         //OSC Port In
-        portInLabel = new JLabel("Port In:  ");
+        portInLabel = new JLabel(Constants.PORTINLABEL);
         portInLabel.setForeground(Color.WHITE);
         portInLabel.setFont(labelFont);
         constraints.gridx = 0;
@@ -46,7 +46,7 @@ public class GridPanel extends JPanel {
         bagLayout.setConstraints(portInLabel, constraints);
         add(portInLabel);
 
-        portInTextField = new JTextField("8080");
+        portInTextField = new JTextField(Constants.DEFAULTPORTNUMBER);
         portInTextField.setFont(tfieldFont);
         portInTextField.setColumns(6);
         constraints.gridx = 1;
@@ -65,7 +65,7 @@ public class GridPanel extends JPanel {
         add(errorLabel);
 
         //Grid Type
-        typeLabel = new JLabel("Type: ");
+        typeLabel = new JLabel(Constants.TYPELABEL);
         typeLabel.setFont(labelFont);
         typeLabel.setForeground(Color.WHITE);
         typeLabel.setBackground(Color.DARK_GRAY);
@@ -77,7 +77,7 @@ public class GridPanel extends JPanel {
 
         typeRadioButtons = new ButtonGroup();
 
-        typeRB1 = new JRadioButton("Midi");
+        typeRB1 = new JRadioButton(Constants.TYPERB1LABEL);
         typeRB1.setFont(rbuttonFont);
         typeRB1.setForeground(Color.WHITE);
         typeRB1.setBackground(Color.DARK_GRAY);
@@ -89,7 +89,7 @@ public class GridPanel extends JPanel {
         bagLayout.setConstraints(typeRB1, constraints);
         add(typeRB1);
 
-        typeRB2 = new JRadioButton("VGrid");
+        typeRB2 = new JRadioButton(Constants.TYPERB2LABEL);
         typeRB2.setFont(rbuttonFont);
         typeRB2.setForeground(Color.WHITE);
         typeRB2.setBackground(Color.DARK_GRAY);
@@ -102,9 +102,9 @@ public class GridPanel extends JPanel {
 
 
         //Create Button
-        createButton = new JButton("Create");
+        createButton = new JButton(Constants.CREATEBUTTONLABEL);
         createButton.setFont(buttonFont);
-        createButton.setPreferredSize(new Dimension(120, 40));
+        createButton.setPreferredSize(new Dimension(Constants.CREATEBUTTONWIDTH, Constants.CREATEBUTTONHEIGHT));
         createButton.addActionListener(new SBActionListener(this,
                 midiPanel,
                 this.requestServer,
