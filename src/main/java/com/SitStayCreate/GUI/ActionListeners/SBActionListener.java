@@ -19,6 +19,7 @@ public class SBActionListener implements ActionListener {
     private RequestServer requestServer;
     private DTPane devicePane;
     private final static String ERRORLABEL = "Unavailable port";
+    private final static int DEFAULTPORT = 10000;
 
     public SBActionListener(GridPanel gridPanel,
                             MidiPanel midiPanel,
@@ -57,7 +58,7 @@ public class SBActionListener implements ActionListener {
 
         //create OscDevice
         try {
-            MidiGridAdapter grid = new MidiGridAdapter(new MonomeApp(10000),
+            MidiGridAdapter grid = new MidiGridAdapter(new MonomeApp(DEFAULTPORT),
                     midiPanel.getDims(),
                     portIn,
                     hardwareDevice);
