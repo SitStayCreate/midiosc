@@ -1,2 +1,2 @@
-# midiosc
-Like serialosc, but for midi
+# cerealosc
+Like serialosc, but tastier
