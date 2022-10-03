@@ -1,6 +1,7 @@
 package com.SitStayCreate.GUI;
 
 import com.SitStayCreate.Serialosc.RequestServer;
+import com.SitStayCreate.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class MainPanel extends JPanel {
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
         //Midi settings
-        MidiPanel midiPanel = new MidiPanel(Constants.FONTSIZE);
+        MidiPanel midiPanel = new MidiPanel(Constants.FONT_SIZE);
         constraints.gridwidth = 2;
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -29,9 +30,9 @@ public class MainPanel extends JPanel {
 
         //Creates grids
         //need a reference to the DTPane so we can pass it in
-        DTPane pane = new DTPane(new DevicesTable(Constants.FONTSIZE));
+        DTPane pane = new DTPane(new DevicesTable(Constants.FONT_SIZE));
 
-        GridPanel gridPanel = new GridPanel(midiPanel, Constants.FONTSIZE, requestServer, pane);
+        GridPanel gridPanel = new GridPanel(midiPanel, Constants.FONT_SIZE, requestServer, pane);
         constraints.insets = new Insets(0, 0, 0, 0);
         constraints.gridwidth = 1;
         constraints.gridx = 0;

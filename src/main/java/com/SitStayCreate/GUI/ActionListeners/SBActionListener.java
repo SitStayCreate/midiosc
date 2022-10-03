@@ -7,6 +7,7 @@ import com.SitStayCreate.MidiGrid.HardwareDevice;
 import com.SitStayCreate.MidiGrid.MidiGridAdapter;
 import com.SitStayCreate.Serialosc.*;
 import com.SitStayCreate.VirtualGrid.VGridFrame;
+import com.SitStayCreate.Constants;
 
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -18,8 +19,6 @@ public class SBActionListener implements ActionListener {
     private MidiPanel midiPanel;
     private RequestServer requestServer;
     private DTPane devicePane;
-    private final static String ERRORLABEL = "Unavailable port";
-    private final static int DEFAULTPORT = 10000;
 
     public SBActionListener(GridPanel gridPanel,
                             MidiPanel midiPanel,
@@ -40,7 +39,7 @@ public class SBActionListener implements ActionListener {
         //Check that the port is not already in use, if it is, do not create a device
         for(MonomeController controller : controllers){
             if(controller.getDecoratedOSCPortIn().getPortIn() == portIn){
-                gridPanel.setErrorLabel(ERRORLABEL);
+                gridPanel.setErrorLabel(Constants.ERROR_LABEL);
                 return;
             }
         }
@@ -58,7 +57,7 @@ public class SBActionListener implements ActionListener {
 
         //create OscDevice
         try {
-            MidiGridAdapter grid = new MidiGridAdapter(new MonomeApp(DEFAULTPORT),
+            MidiGridAdapter grid = new MidiGridAdapter(new MonomeApp(Constants.DEFAULT_PORT),
                     midiPanel.getDims(),
                     portIn,
                     hardwareDevice);

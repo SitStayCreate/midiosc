@@ -1,5 +1,6 @@
 package com.SitStayCreate.MidiGrid;
 
+import com.SitStayCreate.Constants;
 import com.SitStayCreate.MidiGrid.LEDListeners.*;
 import com.SitStayCreate.Serialosc.*;
 import com.illposed.osc.*;
@@ -50,52 +51,52 @@ public class MidiGridAdapter extends GridController implements Transmitter, Rece
     @Override
     public void addLEDListeners(){
         int channel = hardwareDevice.getChannel();
-        String ledSetSelectorRegex = "/.*/grid/led/set";
+        String ledSetSelectorRegex = Constants.LED_SET_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledSetMessageSelector = new JavaRegexAddressMessageSelector(ledSetSelectorRegex);
         mgledSetListener = new MGLEDSetListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledSetMessageSelector, mgledSetListener);
 
-        String ledAllSelectorRegex = "/.*/grid/led/all";
+        String ledAllSelectorRegex = Constants.LED_ALL_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledAllMessageSelector = new JavaRegexAddressMessageSelector(ledAllSelectorRegex);
         mgledAllListener = new MGLEDAllListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledAllMessageSelector, mgledAllListener);
 
-        String ledMapSelectorRegex = "/.*/grid/led/map";
+        String ledMapSelectorRegex = Constants.LED_MAP_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledMapMessageSelector = new JavaRegexAddressMessageSelector(ledMapSelectorRegex);
         mgledMapListener = new MGLEDMapListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledMapMessageSelector, mgledMapListener);
 
-        String ledRowSelectorRegex = "/.*/grid/led/row";
+        String ledRowSelectorRegex = Constants.LED_ROW_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledRowMessageSelector = new JavaRegexAddressMessageSelector(ledRowSelectorRegex);
         mgledRowListener = new MGLEDRowListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledRowMessageSelector, mgledRowListener);
 
-        String ledColSelectorRegex = "/.*/grid/led/col";
+        String ledColSelectorRegex = Constants.LED_COL_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledColMessageSelector = new JavaRegexAddressMessageSelector(ledColSelectorRegex);
         mgledColListener = new MGLEDColListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledColMessageSelector, mgledColListener);
 
-        String ledLevelSetSelectorRegex = "/.*/grid/led/level/set";
+        String ledLevelSetSelectorRegex = Constants.LED_LEVEL_SET_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelSetMessageSelector = new JavaRegexAddressMessageSelector(ledLevelSetSelectorRegex);
         mgledLevelSetListener = new MGLEDLevelSetListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledLevelSetMessageSelector, mgledLevelSetListener);
 
-        String ledLevelAllSelectorRegex = "/.*/grid/led/level/all";
+        String ledLevelAllSelectorRegex = Constants.LED_LEVEL_ALL_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelAllMessageSelector = new JavaRegexAddressMessageSelector(ledLevelAllSelectorRegex);
         mgledLevelAllListener = new MGLEDLevelAllListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledLevelAllMessageSelector, mgledLevelAllListener);
 
-        String ledLevelMapSelectorRegex = "/.*/grid/led/level/map";
+        String ledLevelMapSelectorRegex = Constants.LED_LEVEL_MAP_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelMapMessageSelector = new JavaRegexAddressMessageSelector(ledLevelMapSelectorRegex);
         mgledLevelMapListener = new MGLEDLevelMapListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledLevelMapMessageSelector, mgledLevelMapListener);
 
-        String ledLevelRowSelectorRegex = "/.*/grid/led/level/row";
+        String ledLevelRowSelectorRegex = Constants.LED_LEVEL_ROW_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelRowMessageSelector = new JavaRegexAddressMessageSelector(ledLevelRowSelectorRegex);
         mgledLevelRowListener = new MGLEDLevelRowListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledLevelRowMessageSelector, mgledLevelRowListener);
 
-        String ledLevelColSelectorRegex = "/.*/grid/led/level/col";
+        String ledLevelColSelectorRegex = Constants.LED_LEVEL_COL_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelColMessageSelector = new JavaRegexAddressMessageSelector(ledLevelColSelectorRegex);
         mgledLevelColListener = new MGLEDLevelColListener(dimensions, receiver, channel);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledLevelColMessageSelector, mgledLevelColListener);
@@ -165,7 +166,6 @@ public class MidiGridAdapter extends GridController implements Transmitter, Rece
     //closing the open OSC ports.
     public void close() {
         try {
-            System.out.println("Test");
             decoratedOSCPortOut.close();
             decoratedOSCPortIn.close();
             hardwareDevice.close();

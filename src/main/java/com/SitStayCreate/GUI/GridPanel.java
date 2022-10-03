@@ -4,6 +4,7 @@ import com.SitStayCreate.GUI.ActionListeners.SBActionListener;
 import com.SitStayCreate.GUI.ActionListeners.TypeRB1ActionListener;
 import com.SitStayCreate.GUI.ActionListeners.TypeRB2ActionListener;
 import com.SitStayCreate.Serialosc.RequestServer;
+import com.SitStayCreate.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class GridPanel extends JPanel {
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
         //OSC Port In
-        portInLabel = new JLabel(Constants.PORTINLABEL);
+        portInLabel = new JLabel(Constants.PORT_IN_LABEL);
         portInLabel.setForeground(Color.WHITE);
         portInLabel.setFont(labelFont);
         constraints.gridx = 0;
@@ -46,7 +47,7 @@ public class GridPanel extends JPanel {
         bagLayout.setConstraints(portInLabel, constraints);
         add(portInLabel);
 
-        portInTextField = new JTextField(Constants.DEFAULTPORTNUMBER);
+        portInTextField = new JTextField(Constants.DEFAULT_PORT_NUMBER);
         portInTextField.setFont(tfieldFont);
         portInTextField.setColumns(6);
         constraints.gridx = 1;
@@ -65,7 +66,7 @@ public class GridPanel extends JPanel {
         add(errorLabel);
 
         //Grid Type
-        typeLabel = new JLabel(Constants.TYPELABEL);
+        typeLabel = new JLabel(Constants.TYPE_LABEL);
         typeLabel.setFont(labelFont);
         typeLabel.setForeground(Color.WHITE);
         typeLabel.setBackground(Color.DARK_GRAY);
@@ -77,7 +78,7 @@ public class GridPanel extends JPanel {
 
         typeRadioButtons = new ButtonGroup();
 
-        typeRB1 = new JRadioButton(Constants.TYPERB1LABEL);
+        typeRB1 = new JRadioButton(Constants.TYPE_RB1_LABEL);
         typeRB1.setFont(rbuttonFont);
         typeRB1.setForeground(Color.WHITE);
         typeRB1.setBackground(Color.DARK_GRAY);
@@ -89,7 +90,7 @@ public class GridPanel extends JPanel {
         bagLayout.setConstraints(typeRB1, constraints);
         add(typeRB1);
 
-        typeRB2 = new JRadioButton(Constants.TYPERB2LABEL);
+        typeRB2 = new JRadioButton(Constants.TYPE_RB2_LABEL);
         typeRB2.setFont(rbuttonFont);
         typeRB2.setForeground(Color.WHITE);
         typeRB2.setBackground(Color.DARK_GRAY);
@@ -102,9 +103,9 @@ public class GridPanel extends JPanel {
 
 
         //Create Button
-        createButton = new JButton(Constants.CREATEBUTTONLABEL);
+        createButton = new JButton(Constants.CREATE_BUTTON_LABEL);
         createButton.setFont(buttonFont);
-        createButton.setPreferredSize(new Dimension(Constants.CREATEBUTTONWIDTH, Constants.CREATEBUTTONHEIGHT));
+        createButton.setPreferredSize(new Dimension(Constants.CREATE_BUTTON_WIDTH, Constants.CREATE_BUTTON_HEIGHT));
         createButton.addActionListener(new SBActionListener(this,
                 midiPanel,
                 this.requestServer,

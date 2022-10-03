@@ -4,6 +4,7 @@ import com.SitStayCreate.Serialosc.SysListeners.SysHostListener;
 import com.SitStayCreate.Serialosc.SysListeners.SysInfoListener;
 import com.SitStayCreate.Serialosc.SysListeners.SysPortListener;
 import com.SitStayCreate.Serialosc.SysListeners.SysPrefixListener;
+import com.SitStayCreate.Constants;
 import com.illposed.osc.*;
 import com.illposed.osc.messageselector.OSCPatternAddressMessageSelector;
 
@@ -36,26 +37,22 @@ public abstract class GridController extends MonomeController {
     @Override
     public void addSysListeners(){
         //Listens for /sys/prefix messages
-        String sysPrefixString = "/sys/prefix";
-        MessageSelector sysPrefixSelector = new OSCPatternAddressMessageSelector(sysPrefixString);
+        MessageSelector sysPrefixSelector = new OSCPatternAddressMessageSelector(Constants.SYS_PREFIX_MESSAGE);
         SysPrefixListener sysPrefixMessageListener = new SysPrefixListener(this);
         decoratedOSCPortIn.getDispatcher().addListener(sysPrefixSelector, sysPrefixMessageListener);
 
         //Listens for /sys/port messages
-        String sysPortString = "/sys/port";
-        MessageSelector sysPortSelector = new OSCPatternAddressMessageSelector(sysPortString);
+        MessageSelector sysPortSelector = new OSCPatternAddressMessageSelector(Constants.SYS_PORT_MESSAGE);
         SysPortListener sysPortMessageListener = new SysPortListener(this);
         decoratedOSCPortIn.getDispatcher().addListener(sysPortSelector, sysPortMessageListener);
 
         //Listens for /sys/info messages
-        String sysInfoString = "/sys/info";
-        MessageSelector sysInfoSelector = new OSCPatternAddressMessageSelector(sysInfoString);
+        MessageSelector sysInfoSelector = new OSCPatternAddressMessageSelector(Constants.SYS_INFO_MESSAGE);
         SysInfoListener sysInfoListener = new SysInfoListener(this);
         decoratedOSCPortIn.getDispatcher().addListener(sysInfoSelector, sysInfoListener);
 
         //Listens for /sys/host messages
-        String sysHostString = "/sys/host";
-        MessageSelector sysHostSelector = new OSCPatternAddressMessageSelector(sysHostString);
+        MessageSelector sysHostSelector = new OSCPatternAddressMessageSelector(Constants.SYS_HOST_MESSAGE);
         SysHostListener sysHostListener = new SysHostListener(this);
         decoratedOSCPortIn.getDispatcher().addListener(sysHostSelector, sysHostListener);
     }

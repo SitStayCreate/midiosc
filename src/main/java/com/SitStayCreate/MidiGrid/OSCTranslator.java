@@ -1,5 +1,6 @@
 package com.SitStayCreate.MidiGrid;
 
+import com.SitStayCreate.Constants;
 import com.SitStayCreate.Serialosc.Dimensions;
 import com.illposed.osc.OSCMessage;
 import com.illposed.osc.OSCMessageInfo;
@@ -14,14 +15,14 @@ import java.util.List;
 public class OSCTranslator {
 
     private static OSCMessage makeOSCList(String prefix, int x, int y, int z){
-        String addressString = String.format("%s/grid/key", prefix);
+        String addressString = String.format(Constants.FORMAT_STRING, prefix);
         //make this a list
         List<Integer> oscArgs = new ArrayList<>();
         oscArgs.add(x);
         oscArgs.add(y);
         oscArgs.add(z);
 
-        OSCMessageInfo oscMessageInfo = new OSCMessageInfo("iii");
+        OSCMessageInfo oscMessageInfo = new OSCMessageInfo(Constants.FORMAT_TYPE_TAG);
         OSCMessage oscMessage = new OSCMessage(addressString, oscArgs, oscMessageInfo);
 
         return oscMessage;

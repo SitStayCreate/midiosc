@@ -2,6 +2,7 @@ package com.SitStayCreate.Serialosc.SysListeners;
 
 import com.SitStayCreate.Serialosc.MonomeApp;
 import com.SitStayCreate.Serialosc.GridController;
+import com.SitStayCreate.Constants;
 
 import com.illposed.osc.*;
 import com.illposed.osc.transport.udp.OSCPortOut;
@@ -13,10 +14,10 @@ import java.util.List;
 public class SysInfoListener implements OSCMessageListener {
 
     //The controller associated with the listener will never change once it's created
-    private final GridController MONOMECONTROLLER;
+    private final GridController MONOME_CONTROLLER;
 
     public SysInfoListener(GridController monomeController){
-        this.MONOMECONTROLLER = monomeController;
+        this.MONOME_CONTROLLER = monomeController;
     }
 
     @Override
@@ -31,12 +32,12 @@ public class SysInfoListener implements OSCMessageListener {
             sendInfo(new MonomeApp(hostName, portName));
         // /sys/info i <port>
         } else if(oscArgs.size() == 1){
-            hostName = MONOMECONTROLLER.getMonomeApp().getHostName();
+            hostName = MONOME_CONTROLLER.getMonomeApp().getHostName();
             portName = (int) oscArgs.get(0);
             sendInfo(new MonomeApp(hostName, portName));
         // /sys/info
         } else {
-            MonomeApp monomeApp = MONOMECONTROLLER.getMonomeApp();
+            MonomeApp monomeApp = MONOME_CONTROLLER.getMonomeApp();
             sendInfo(monomeApp);
         }
     }
@@ -48,35 +49,35 @@ public class SysInfoListener implements OSCMessageListener {
         //create OSCMessages
         List sysPortArgs = new ArrayList();
         sysPortArgs.add(monomeApp.getPortNumber());
-        OSCMessage sysPort = new OSCMessage("/sys/port", sysPortArgs, new OSCMessageInfo("i"));
+        OSCMessage sysPort = new OSCMessage(Constants.SYS_PORT_MESSAGE, sysPortArgs, new OSCMessageInfo(Constants.SYS_PORT_TYPE_TAG));
         oscMessages.add(sysPort);
 
         List sysHostArgs = new ArrayList();
         sysHostArgs.add(monomeApp.getHostName());
-        OSCMessage sysHost = new OSCMessage("/sys/host", sysHostArgs, new OSCMessageInfo("s"));
+        OSCMessage sysHost = new OSCMessage(Constants.SYS_HOST_MESSAGE, sysHostArgs, new OSCMessageInfo(Constants.SYS_HOST_TYPE_TAG));
         oscMessages.add(sysHost);
 
         List sysIdArgs = new ArrayList();
-        sysIdArgs.add(MONOMECONTROLLER.getId());
-        OSCMessage sysId = new OSCMessage("/sys/id", sysIdArgs, new OSCMessageInfo("s"));
+        sysIdArgs.add(MONOME_CONTROLLER.getId());
+        OSCMessage sysId = new OSCMessage(Constants.SYS_ID_MESSAGE, sysIdArgs, new OSCMessageInfo(Constants.SYS_ID_TYPE_TAG));
         oscMessages.add(sysId);
 
         List sysPrefixArgs = new ArrayList();
-        sysPrefixArgs.add(MONOMECONTROLLER.getPrefix());
-        OSCMessage sysPrefix = new OSCMessage("/sys/prefix", sysPrefixArgs, new OSCMessageInfo("s"));
+        sysPrefixArgs.add(MONOME_CONTROLLER.getPrefix());
+        OSCMessage sysPrefix = new OSCMessage(Constants.SYS_PREFIX_MESSAGE, sysPrefixArgs, new OSCMessageInfo(Constants.SYS_PREFIX_TYPE_TAG));
         oscMessages.add(sysPrefix);
 
         //Rotating the controller isn't supported, so this is hardcoded to 0
         List sysRotationArgs = new ArrayList();
         sysRotationArgs.add(0);
-        OSCMessage sysRotation = new OSCMessage("/sys/rotation", sysRotationArgs, new OSCMessageInfo("i"));
+        OSCMessage sysRotation = new OSCMessage(Constants.SYS_ROTATION_MESSAGE, sysRotationArgs, new OSCMessageInfo(Constants.SYS_ROTATION_TYPE_TAG));
         oscMessages.add(sysRotation);
 
         List sysSizeArgs = new ArrayList();
-        sysSizeArgs.add(MONOMECONTROLLER.getDimensions().getWidth());
-        sysSizeArgs.add(MONOMECONTROLLER.getDimensions().getHeight());
+        sysSizeArgs.add(MONOME_CONTROLLER.getDimensions().getWidth());
+        sysSizeArgs.add(MONOME_CONTROLLER.getDimensions().getHeight());
 
-        OSCMessage sysSize = new OSCMessage("/sys/size", sysSizeArgs, new OSCMessageInfo("ii"));
+        OSCMessage sysSize = new OSCMessage(Constants.SYS_SIZE_MESSAGE, sysSizeArgs, new OSCMessageInfo(Constants.SYS_SIZE_TYPE_TAG));
         oscMessages.add(sysSize);
 
         try{

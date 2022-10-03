@@ -1,5 +1,7 @@
 package com.SitStayCreate.Serialosc;
 
+import com.SitStayCreate.Constants;
+
 import com.illposed.osc.*;
 import com.illposed.osc.messageselector.OSCPatternAddressMessageSelector;
 import com.illposed.osc.transport.udp.OSCPortIn;
@@ -13,8 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 public class RequestServer {
-    //Listens on this port for requests
-    private static final int PORT_NUMBER = 12002;
     private OSCPortIn oscPortIn;
     private OSCPortOut oscPortOut;
     //List of monomeApps that want to be updated when a new device connects (/serialosc/notify)
@@ -42,18 +42,16 @@ public class RequestServer {
 
     public void startServer(){
         try{
-            oscPortIn = new OSCPortIn(PORT_NUMBER);
+            oscPortIn = new OSCPortIn(Constants.PORT_NUMBER);
 
             //Create Listeners for the port
-            String listString = "/serialosc/list";
-            MessageSelector listSelector = new OSCPatternAddressMessageSelector(listString);
+            MessageSelector listSelector = new OSCPatternAddressMessageSelector(Constants.LIST_STRING);
             //Create an event listener
             ListMessageListener listMessageListener = new ListMessageListener();
             oscPortIn.getDispatcher().addListener(listSelector, listMessageListener);
 
             //Create Listeners for the port
-            String notifyString = "/serialosc/notify";
-            MessageSelector notifySelector = new OSCPatternAddressMessageSelector(notifyString);
+            MessageSelector notifySelector = new OSCPatternAddressMessageSelector(Constants.NOTIFY_STRING);
             //Create an event listener
             NotifyMessageListener notifyMessageListener = new NotifyMessageListener();
             oscPortIn.getDispatcher().addListener(notifySelector, notifyMessageListener);
@@ -72,11 +70,11 @@ public class RequestServer {
         //build oscArgs
         ArrayList oscArgs = new ArrayList();
         oscArgs.add(monomeController.getId());
-        oscArgs.add("monome " + ((GridController)monomeController).getDimensions().getArea());
+        oscArgs.add(Constants.THEY_WHO_SHALL_NOT_BE_NAMED + ((GridController)monomeController).getDimensions().getArea());
         oscArgs.add(decoratedOSCPortIn.getPortIn());
         //send response to each MonomeApp in the list
         for(MonomeApp monomeApp : monomeApps){
-            sendResponse(monomeApp, "/serialosc/device", new OSCMessageInfo("ssi"), oscArgs);
+            sendResponse(monomeApp, Constants.DEVICE_STRING, new OSCMessageInfo(Constants.DEVICE_TYPE_TAG), oscArgs);
         }
     }
 
@@ -119,12 +117,12 @@ public class RequestServer {
                 //build up oscArgs
                 ArrayList oscArgs = new ArrayList();
                 oscArgs.add(gridController.getId());
-                oscArgs.add("monome " + gridController.getDimensions().getArea()); //used to be Dimensions class method GetArea()
+                oscArgs.add(Constants.THEY_WHO_SHALL_NOT_BE_NAMED + gridController.getDimensions().getArea()); //used to be Dimensions class method GetArea()
                 oscArgs.add(decoratedOSCPortIn.getPortIn());
 
                 sendResponse(monomeApp,
-                        "/serialosc/device",
-                        new OSCMessageInfo("ssi"),
+                        Constants.DEVICE_STRING,
+                        new OSCMessageInfo(Constants.DEVICE_TYPE_TAG),
                         oscArgs);
             }
         }

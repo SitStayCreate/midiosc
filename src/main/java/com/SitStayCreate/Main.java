@@ -7,6 +7,10 @@ import java.awt.*;
 
 public class Main {
 
+    private final static String TITLE = "midiosc-1.1.0";
+    private final static int FRAME_WIDTH = 500;
+    private final static int FRAME_HEIGHT = 360;
+
     public static void main(String[] args){
         Main gui = new Main();
 
@@ -15,7 +19,7 @@ public class Main {
     }
 
     public void go(){
-        JFrame frame = new JFrame("midiosc-1.1.0");
+        JFrame frame = new JFrame(TITLE);
         JPanel jPanel = new JPanel();
         OSCDeviceJPanel oscDeviceJPanel = new OSCDeviceJPanel();
         oscDeviceJPanel.setBackground(Color.DARK_GRAY);
@@ -23,13 +27,13 @@ public class Main {
         jPanel.setBackground(Color.DARK_GRAY);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(500, 360);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.add(jPanel);
         frame.setVisible(true);
     }
 
     public void go2(){
-        JFrame frame = new JFrame("midiosc-1.1.0");
+        JFrame frame = new JFrame(TITLE);
         JPanel jPanel = new JPanel();
 
         MainPanel mainPanel = new MainPanel();
@@ -38,7 +42,7 @@ public class Main {
         jPanel.setBackground(Color.DARK_GRAY);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(500, 360);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.add(jPanel);
         frame.setVisible(true);
     }

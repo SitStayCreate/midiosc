@@ -2,7 +2,7 @@ package com.SitStayCreate.GUI;
 
 import com.SitStayCreate.MidiGrid.HardwareDevice;
 import com.SitStayCreate.Serialosc.Dimensions;
-import com.sun.org.apache.bcel.internal.Const;
+import com.SitStayCreate.Constants;
 
 import javax.sound.midi.*;
 import javax.swing.*;
@@ -41,7 +41,7 @@ public class MidiPanel extends JPanel {
         constraints.insets = new Insets(0, 0, 5, 0);
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel midiInLabel = new JLabel(Constants.MIDIINLABEL);
+        JLabel midiInLabel = new JLabel(Constants.MIDI_IN_LABEL);
         midiInLabel.setForeground(Color.WHITE);
         midiInLabel.setFont(labelFont);
         constraints.gridx = 0;
@@ -61,7 +61,7 @@ public class MidiPanel extends JPanel {
         add(midiInComboBox);
 
         //MIDI Out
-        JLabel midiOutLabel = new JLabel(Constants.MIDIOUTLABEL);
+        JLabel midiOutLabel = new JLabel(Constants.MIDI_OUT_LABEL);
         midiOutLabel.setForeground(Color.WHITE);
         midiOutLabel.setFont(labelFont);
         constraints.gridx = 0;
@@ -84,7 +84,7 @@ public class MidiPanel extends JPanel {
 
         //Dimensions
 
-        JLabel dimsLabel = new JLabel(Constants.DIMENSLABEL);
+        JLabel dimsLabel = new JLabel(Constants.DIMENS_LABEL);
         dimsLabel.setFont(labelFont);
         dimsLabel.setForeground(Color.WHITE);
         constraints.gridx = 0;
@@ -97,7 +97,7 @@ public class MidiPanel extends JPanel {
 
         ButtonGroup sizeRadioButtons = new ButtonGroup();
 
-        dimsRB1 = new JRadioButton(Constants.RADIOBUTTON1LABEL);
+        dimsRB1 = new JRadioButton(Constants.RADIO_BUTTON1_LABEL);
         dimsRB1.setFont(rbuttonFont);
         dimsRB1.setForeground(Color.WHITE);
         dimsRB1.setBackground(Color.DARK_GRAY);
@@ -108,7 +108,7 @@ public class MidiPanel extends JPanel {
         sizeRadioButtons.add(dimsRB1);
         add(dimsRB1);
 
-        dimsRB2 = new JRadioButton(Constants.RADIOBUTTON2LABEL);
+        dimsRB2 = new JRadioButton(Constants.RADIO_BUTTON2_LABEL);
         dimsRB2.setFont(rbuttonFont);
         dimsRB2.setForeground(Color.WHITE);
         dimsRB2.setBackground(Color.DARK_GRAY);
@@ -118,7 +118,7 @@ public class MidiPanel extends JPanel {
         sizeRadioButtons.add(dimsRB2);
         add(dimsRB2);
 
-        invertedCheckBox = new JCheckBox(Constants.INVERTLABEL);
+        invertedCheckBox = new JCheckBox(Constants.INVERT_LABEL);
         invertedCheckBox.setFont(chkboxFont);
         invertedCheckBox.setForeground(Color.WHITE);
         invertedCheckBox.setBackground(Color.DARK_GRAY);
@@ -128,7 +128,7 @@ public class MidiPanel extends JPanel {
         add(invertedCheckBox);
 
         //Channel select
-        JLabel chLabel = new JLabel(Constants.CHANNELLABEL);
+        JLabel chLabel = new JLabel(Constants.CHANNEL_LABEL);
         chLabel.setForeground(Color.WHITE);
         chLabel.setFont(labelFont);
         constraints.gridx = 0;
@@ -258,13 +258,13 @@ public class MidiPanel extends JPanel {
 
     private MidiDevice getMidiInDevice(){
         String midiInName = (String) midiInComboBox.getSelectedItem();
-        midiInName = midiInName.split(Constants.REGEXSPLIT)[0];
+        midiInName = midiInName.split(Constants.REGEX_SPLIT)[0];
         return midiInDeviceMap.get(midiInName);
     }
 
     private MidiDevice getMidiOutDevice(){
         String midiOutName = (String) midiOutComboBox.getSelectedItem();
-        midiOutName = midiOutName.split(Constants.REGEXSPLIT)[0];
+        midiOutName = midiOutName.split(Constants.REGEX_SPLIT)[0];
         return midiOutDeviceMap.get(midiOutName);
     }
 

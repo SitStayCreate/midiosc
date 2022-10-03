@@ -2,6 +2,7 @@ package com.SitStayCreate.GUI;
 
 import com.SitStayCreate.MidiGrid.MidiGridAdapter;
 import com.SitStayCreate.VirtualGrid.VirtualGridController;
+import com.SitStayCreate.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ public class DTPane extends JScrollPane {
 
     public DTPane(DevicesTable devicesTable) {
         super(devicesTable);
-        setMaximumSize(new Dimension(Constants.DTPANEWIDTH, Constants.DTPANEHEIGHT));
+        setMaximumSize(new Dimension(Constants.DTPANE_WIDTH, Constants.DTPANE_HEIGHT));
         getViewport().setBackground(Color.GRAY);
         this.devicesTable = devicesTable;
     }

@@ -4,6 +4,7 @@ import com.SitStayCreate.Serialosc.*;
 import com.SitStayCreate.VirtualGrid.LEDListeners.*;
 import com.illposed.osc.*;
 import com.illposed.osc.messageselector.JavaRegexAddressMessageSelector;
+import com.SitStayCreate.Constants;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VirtualGridController extends GridController {
-    private static final List<Color> LEDCOLORS = new ArrayList<>(4);
+    private static final List<Color> LED_COLORS = new ArrayList<>(Constants.LED_COLOR_CAPACITY);
     private VGButton[][] buttonMatrix;
     private VGridFrame vGridFrame;
 
@@ -37,18 +38,18 @@ public class VirtualGridController extends GridController {
             new DecoratedOSCPortIn(portInNumber),
             new DecoratedOSCPortOut(monomeApp.getInetAddress(),
             monomeApp.getPortNumber()),
-            new Dimensions(8, 16, false));
-        LEDCOLORS.add(Color.DARK_GRAY);
-        LEDCOLORS.add(Color.decode("#006666"));
-        LEDCOLORS.add(Color.decode("#00b3b3"));
-        LEDCOLORS.add(Color.decode("#00ffff"));
+            new Dimensions(Constants.HEIGHT, Constants.WIDTH, false));
+        LED_COLORS.add(Color.DARK_GRAY);
+        LED_COLORS.add(Color.decode(Constants.COLOR_LEVEL_TWO));
+        LED_COLORS.add(Color.decode(Constants.COLOR_LEVEL_THREE));
+        LED_COLORS.add(Color.decode(Constants.COLOR_LEVEL_FOUR));
 
         buttonMatrix = new VGButton[dimensions.getWidth()][dimensions.getHeight()];
 
         for (int j = 0; j < dimensions.getHeight(); j++){
             for (int i = 0; i < dimensions.getWidth(); i++){
                     buttonMatrix[i][j] = new VGButton();
-                    buttonMatrix[i][j].setPreferredSize(new Dimension(60, 60));
+                    buttonMatrix[i][j].setPreferredSize(new Dimension(Constants.BUTTON_SIZE, Constants.BUTTON_SIZE));
                     final int x = i;
                     final int y = j;
                     buttonMatrix[i][j].addMouseListener(new MouseListener() {
@@ -59,13 +60,13 @@ public class VirtualGridController extends GridController {
 
                         @Override
                         public void mousePressed(MouseEvent e) {
-                            String addressString = String.format("%s/grid/key", getPrefix());
+                            String addressString = String.format(Constants.FORMAT_STRING, getPrefix());
                             List<Integer> oscArgs = new ArrayList<>();
                             oscArgs.add(x);
                             oscArgs.add(y);
                             oscArgs.add(1);
 
-                            OSCMessageInfo oscMessageInfo = new OSCMessageInfo("iii");
+                            OSCMessageInfo oscMessageInfo = new OSCMessageInfo(Constants.FORMAT_TYPE_TAG);
                             OSCMessage oscMessage = new OSCMessage(addressString, oscArgs, oscMessageInfo);
                             try {
                                 System.out.println(getPrefix());
@@ -80,13 +81,13 @@ public class VirtualGridController extends GridController {
 
                         @Override
                         public void mouseReleased(MouseEvent e) {
-                            String addressString = String.format("%s/grid/key", getPrefix());
+                            String addressString = String.format(Constants.FORMAT_STRING, getPrefix());
                             List<Integer> oscArgs = new ArrayList<>();
                             oscArgs.add(x);
                             oscArgs.add(y);
                             oscArgs.add(0);
 
-                            OSCMessageInfo oscMessageInfo = new OSCMessageInfo("iii");
+                            OSCMessageInfo oscMessageInfo = new OSCMessageInfo(Constants.FORMAT_TYPE_TAG);
                             OSCMessage oscMessage = new OSCMessage(addressString, oscArgs, oscMessageInfo);
                             try {
                                 System.out.println(oscArgs);
@@ -120,54 +121,54 @@ public class VirtualGridController extends GridController {
 
     @Override
     public void addLEDListeners() {
-        String ledSetSelectorRegex = "/.*/grid/led/set";
+        String ledSetSelectorRegex = Constants.LED_SET_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledSetMessageSelector = new JavaRegexAddressMessageSelector(ledSetSelectorRegex);
-        VGLEDSetListener vgledSetListener = new VGLEDSetListener(buttonMatrix, LEDCOLORS);
+        VGLEDSetListener vgledSetListener = new VGLEDSetListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getOscPortIn().getDispatcher().addListener(ledSetMessageSelector, vgledSetListener);
 
-        String ledAllSelectorRegex = "/.*/grid/led/all";
+        String ledAllSelectorRegex = Constants.LED_ALL_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledAllMessageSelector = new JavaRegexAddressMessageSelector(ledAllSelectorRegex);
-        VGLEDAllListener vgledAllListener = new VGLEDAllListener(buttonMatrix, LEDCOLORS);
+        VGLEDAllListener vgledAllListener = new VGLEDAllListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getDispatcher().addListener(ledAllMessageSelector, vgledAllListener);
 
-        String ledMapSelectorRegex = "/.*/grid/led/map";
+        String ledMapSelectorRegex = Constants.LED_MAP_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledMapMessageSelector = new JavaRegexAddressMessageSelector(ledMapSelectorRegex);
-        VGLEDMapListener vgledMapListener = new VGLEDMapListener(buttonMatrix, LEDCOLORS);
+        VGLEDMapListener vgledMapListener = new VGLEDMapListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getDispatcher().addListener(ledMapMessageSelector, vgledMapListener);
 
-        String ledRowSelectorRegex = "/.*/grid/led/row";
+        String ledRowSelectorRegex = Constants.LED_ROW_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledRowMessageSelector = new JavaRegexAddressMessageSelector(ledRowSelectorRegex);
-        VGLEDRowListener vgledRowListener = new VGLEDRowListener(buttonMatrix, LEDCOLORS);
+        VGLEDRowListener vgledRowListener = new VGLEDRowListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getDispatcher().addListener(ledRowMessageSelector, vgledRowListener);
 
-        String ledColSelectorRegex = "/.*/grid/led/col";
+        String ledColSelectorRegex = Constants.LED_COL_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledColMessageSelector = new JavaRegexAddressMessageSelector(ledColSelectorRegex);
-        VGLEDColListener vgledColListener = new VGLEDColListener(buttonMatrix, LEDCOLORS);
+        VGLEDColListener vgledColListener = new VGLEDColListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getDispatcher().addListener(ledColMessageSelector, vgledColListener);
 
-        String ledLevelSetSelectorRegex = "/.*/grid/led/level/set";
+        String ledLevelSetSelectorRegex = Constants.LED_LEVEL_SET_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelSetMessageSelector = new JavaRegexAddressMessageSelector(ledLevelSetSelectorRegex);
-        VGLEDLevelSetListener vgledLevelSetListener = new VGLEDLevelSetListener(buttonMatrix, LEDCOLORS);
+        VGLEDLevelSetListener vgledLevelSetListener = new VGLEDLevelSetListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getDispatcher().addListener(ledLevelSetMessageSelector, vgledLevelSetListener);
 
-        String ledLevelAllSelectorRegex = "/.*/grid/led/level/all";
+        String ledLevelAllSelectorRegex = Constants.LED_LEVEL_ALL_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelAllMessageSelector = new JavaRegexAddressMessageSelector(ledLevelAllSelectorRegex);
-        VGLEDLevelAllListener vgledLevelAllListener = new VGLEDLevelAllListener(buttonMatrix, LEDCOLORS);
+        VGLEDLevelAllListener vgledLevelAllListener = new VGLEDLevelAllListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getDispatcher().addListener(ledLevelAllMessageSelector, vgledLevelAllListener);
 
-        String ledLevelMapSelectorRegex = "/.*/grid/led/level/map";
+        String ledLevelMapSelectorRegex = Constants.LED_LEVEL_MAP_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelMapMessageSelector = new JavaRegexAddressMessageSelector(ledLevelMapSelectorRegex);
-        VGLEDLevelMapListener vgledLevelMapListener = new VGLEDLevelMapListener(buttonMatrix, LEDCOLORS);
+        VGLEDLevelMapListener vgledLevelMapListener = new VGLEDLevelMapListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getDispatcher().addListener(ledLevelMapMessageSelector, vgledLevelMapListener);
 
-        String ledLevelRowSelectorRegex = "/.*/grid/led/level/row";
+        String ledLevelRowSelectorRegex = Constants.LED_LEVEL_ROW_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelRowMessageSelector = new JavaRegexAddressMessageSelector(ledLevelRowSelectorRegex);
-        VGLEDLevelRowListener vgledLevelRowListener = new VGLEDLevelRowListener(buttonMatrix, LEDCOLORS);
+        VGLEDLevelRowListener vgledLevelRowListener = new VGLEDLevelRowListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getDispatcher().addListener(ledLevelRowMessageSelector, vgledLevelRowListener);
 
-        String ledLevelColSelectorRegex = "/.*/grid/led/level/col";
+        String ledLevelColSelectorRegex = Constants.LED_LEVEL_COL_SELECTOR_REGEX;
         JavaRegexAddressMessageSelector ledLevelColMessageSelector = new JavaRegexAddressMessageSelector(ledLevelColSelectorRegex);
-        VGLEDLevelColListener vgledLevelColListener = new VGLEDLevelColListener(buttonMatrix, LEDCOLORS);
+        VGLEDLevelColListener vgledLevelColListener = new VGLEDLevelColListener(buttonMatrix, LED_COLORS);
         decoratedOSCPortIn.getDispatcher().addListener(ledLevelColMessageSelector, vgledLevelColListener);
     }
 
