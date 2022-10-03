@@ -14,25 +14,10 @@ public class Main {
     public static void main(String[] args){
         Main gui = new Main();
 
-//        gui.go();
-        gui.go2();
+        gui.go();
     }
 
     public void go(){
-        JFrame frame = new JFrame(TITLE);
-        JPanel jPanel = new JPanel();
-        OSCDeviceJPanel oscDeviceJPanel = new OSCDeviceJPanel();
-        oscDeviceJPanel.setBackground(Color.DARK_GRAY);
-        jPanel.add(oscDeviceJPanel);
-        jPanel.setBackground(Color.DARK_GRAY);
-
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        frame.add(jPanel);
-        frame.setVisible(true);
-    }
-
-    public void go2(){
         JFrame frame = new JFrame(TITLE);
         JPanel jPanel = new JPanel();
 
