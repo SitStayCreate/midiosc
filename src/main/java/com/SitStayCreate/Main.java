@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Main {
 
-    private final static String TITLE = "midiosc-1.1.0";
+    private final static String TITLE = "CerealOSC";
     private final static int FRAME_WIDTH = 500;
     private final static int FRAME_HEIGHT = 360;
 
