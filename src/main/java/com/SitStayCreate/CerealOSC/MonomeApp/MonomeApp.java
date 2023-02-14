@@ -20,8 +20,8 @@ public class MonomeApp {
         if(hostName.toLowerCase().equals("localhost")){
             hostName = "127.0.0.1";
         }
-        this.hostName = hostName;
-        this.portNumber = portNumber;
+        setHostName(hostName);
+        setPortNumber(portNumber);
     }
 
     public String getHostName() {

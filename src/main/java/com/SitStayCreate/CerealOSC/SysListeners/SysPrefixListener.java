@@ -14,6 +14,7 @@ public class SysPrefixListener implements OSCMessageListener {
 
     @Override
     public void acceptMessage(OSCMessageEvent event) {
+        System.out.println("SysPrefix Message Received");
         System.out.println((String) event.getMessage().getArguments().get(0));
         MONOMECONTROLLER.setPrefix((String) event.getMessage().getArguments().get(0));
     }

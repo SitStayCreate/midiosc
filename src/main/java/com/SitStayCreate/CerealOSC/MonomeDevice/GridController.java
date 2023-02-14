@@ -1,13 +1,14 @@
 package com.SitStayCreate.CerealOSC.MonomeDevice;
 
-import com.SitStayCreate.CerealOSC.Constants;
+import com.SitStayCreate.CerealOSC.MonomeApp.MonomeApp;
 import com.SitStayCreate.CerealOSC.OSC.DecoratedOSCPortIn;
 import com.SitStayCreate.CerealOSC.OSC.DecoratedOSCPortOut;
-import com.SitStayCreate.CerealOSC.MonomeApp.MonomeApp;
+import com.SitStayCreate.CerealOSC.RequestServer.RequestServer;
 import com.SitStayCreate.CerealOSC.SysListeners.SysHostListener;
 import com.SitStayCreate.CerealOSC.SysListeners.SysInfoListener;
 import com.SitStayCreate.CerealOSC.SysListeners.SysPortListener;
 import com.SitStayCreate.CerealOSC.SysListeners.SysPrefixListener;
+import com.SitStayCreate.Constants;
 import com.illposed.osc.*;
 import com.illposed.osc.messageselector.OSCPatternAddressMessageSelector;
 
@@ -20,9 +21,10 @@ public abstract class GridController extends MonomeController {
     public GridController(MonomeApp monomeApp,
                           DecoratedOSCPortIn decoratedOSCPortIn,
                           DecoratedOSCPortOut decoratedOSCPortOut,
-                          Dimensions dimensions) {
-        super(monomeApp, decoratedOSCPortIn, decoratedOSCPortOut);
-        this.dimensions = dimensions;
+                          Dimensions dimensions,
+                          RequestServer requestServer) {
+        super(monomeApp, decoratedOSCPortIn, decoratedOSCPortOut, requestServer);
+        setDimensions(dimensions);
         addSysListeners();
         getDecoratedOSCPortIn().startListening();
     }
@@ -30,6 +32,10 @@ public abstract class GridController extends MonomeController {
     //TODO: Should this be in the parent?
     public void send(OSCPacket packet) throws IOException, OSCSerializeException {
         decoratedOSCPortOut.send(packet);
+    }
+
+    private void setDimensions(Dimensions dimensions){
+        this.dimensions = dimensions;
     }
 
     public Dimensions getDimensions() {
@@ -61,4 +67,15 @@ public abstract class GridController extends MonomeController {
     }
 
     public abstract void addLEDListeners();
+
+    @Override
+    public void close(){
+        try {
+            decoratedOSCPortIn.close();
+            decoratedOSCPortOut.close();
+            requestServer.removeMonomeController(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

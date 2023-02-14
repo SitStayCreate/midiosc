@@ -1,6 +1,7 @@
 package com.SitStayCreate.CerealOSC.RequestServer;
 
-import com.SitStayCreate.CerealOSC.*;
+import com.SitStayCreate.Constants;
+
 import com.SitStayCreate.CerealOSC.MonomeApp.MonomeApp;
 import com.SitStayCreate.CerealOSC.MonomeDevice.GridController;
 import com.SitStayCreate.CerealOSC.MonomeDevice.MonomeController;
@@ -26,12 +27,12 @@ public class RequestServer {
 
     //List of oscDevices
     //TODO: Make this a set - look at how equality works with children
-    private List<GridController> gridControllers;
+    private Set<GridController> gridControllers;
 
     //I think we just create a new one and don't do anything special
     public RequestServer(){
         monomeApps = new HashSet<>();
-        gridControllers = new ArrayList<>();
+        gridControllers = new HashSet<>();
     }
 
 
@@ -39,10 +40,21 @@ public class RequestServer {
         gridControllers.add(gridController);
     }
 
-    public List<GridController> getGridControllers() {
+    public void removeMonomeController(GridController gridController){
+        gridControllers.remove(gridController);
+        // Tell app to rescan devices
+        // ArrayList can be empty because the device is just watching for the string
+        for(MonomeApp monomeApp : monomeApps){
+            sendResponse(monomeApp, Constants.REMOVE_STRING,
+                    new OSCMessageInfo(Constants.DEVICE_TYPE_TAG),
+                    new ArrayList());
+        }
+    }
+    public Set<GridController> getGridControllers() {
         return gridControllers;
     }
 
+    // This is called when the server is starting
     public void startServer(){
         try{
             oscPortIn = new OSCPortIn(Constants.PORT_NUMBER);
@@ -64,7 +76,7 @@ public class RequestServer {
         }
     }
 
-    //send list of OscDevices when a new device is added
+    // This method tells registered apps when a new device has been added
     public void notifyListeners(MonomeController monomeController){
 
         //Get the controller's input port
@@ -73,7 +85,7 @@ public class RequestServer {
         //build oscArgs
         ArrayList oscArgs = new ArrayList();
         oscArgs.add(monomeController.getId());
-        oscArgs.add(Constants.MONOME + ((GridController)monomeController).getDimensions().getArea());
+        oscArgs.add(Constants.THEY_WHO_SHALL_NOT_BE_NAMED + ((GridController)monomeController).getDimensions().getArea());
         oscArgs.add(decoratedOSCPortIn.getPortIn());
         //send response to each MonomeApp in the list
         for(MonomeApp monomeApp : monomeApps){
@@ -101,7 +113,7 @@ public class RequestServer {
         }
     }
 
-    //Sends list of devices to an monomeApp
+    //When a monomeApp is opened, this method sends a list of devices to the monomeApp
     private class ListMessageListener implements OSCMessageListener {
         public void acceptMessage(OSCMessageEvent event) {
             //Get the args from the message which are [host address, port]
@@ -120,7 +132,7 @@ public class RequestServer {
                 //build up oscArgs
                 ArrayList oscArgs = new ArrayList();
                 oscArgs.add(gridController.getId());
-                oscArgs.add(Constants.MONOME + gridController.getDimensions().getArea()); //used to be Dimensions class method GetArea()
+                oscArgs.add(Constants.THEY_WHO_SHALL_NOT_BE_NAMED + gridController.getDimensions().getArea()); //used to be Dimensions class method GetArea()
                 oscArgs.add(decoratedOSCPortIn.getPortIn());
 
                 sendResponse(monomeApp,
@@ -131,7 +143,8 @@ public class RequestServer {
         }
     }
 
-    //Adds monomeApp to list of listening monomeApps
+    //When a monomeApp is opened, this method adds the monomeApp to the set of listening monomeApps
+    // TODO: Remove an App from the list when it is closed
     private class NotifyMessageListener implements OSCMessageListener {
         public void acceptMessage(OSCMessageEvent event) {
             List oscArgs = event.getMessage().getArguments();
@@ -140,4 +153,5 @@ public class RequestServer {
             monomeApps.add(new MonomeApp(hostName, portNumber));
         }
     }
+
 }

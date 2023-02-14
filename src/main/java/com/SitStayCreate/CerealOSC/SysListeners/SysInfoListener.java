@@ -2,7 +2,7 @@ package com.SitStayCreate.CerealOSC.SysListeners;
 
 import com.SitStayCreate.CerealOSC.MonomeApp.MonomeApp;
 import com.SitStayCreate.CerealOSC.MonomeDevice.GridController;
-import com.SitStayCreate.CerealOSC.Constants;
+import com.SitStayCreate.Constants;
 
 import com.illposed.osc.*;
 import com.illposed.osc.transport.udp.OSCPortOut;
@@ -22,6 +22,7 @@ public class SysInfoListener implements OSCMessageListener {
 
     @Override
     public void acceptMessage(OSCMessageEvent event) {
+        System.out.println("SysInfo Message Received");
         List oscArgs = event.getMessage().getArguments();
         String hostName;
         int portName;

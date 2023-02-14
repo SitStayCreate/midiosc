@@ -7,6 +7,7 @@ import com.illposed.osc.OSCMessageListener;
 
 import java.io.IOException;
 
+// This class updates the hostName of a Monome App
 public class SysHostListener implements OSCMessageListener {
 
     private final MonomeController MONOMECONTROLLER;
@@ -17,6 +18,7 @@ public class SysHostListener implements OSCMessageListener {
 
     @Override
     public void acceptMessage(OSCMessageEvent event) {
+        System.out.println("SysHost Message Received");
         String hostName = (String) event.getMessage().getArguments().get(0);
         System.out.println("Host name: " + hostName);
         //Update the target monomeApp

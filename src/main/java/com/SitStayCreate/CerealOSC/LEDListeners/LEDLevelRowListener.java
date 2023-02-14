@@ -10,17 +10,8 @@ public abstract class LEDLevelRowListener implements OSCMessageListener {
     public void acceptMessage(OSCMessageEvent event) {
         //oscArgList should have either 10 or 18 args xOffset, gridY, + number of buttons in col (8 or 16)
         List oscArgList = event.getMessage().getArguments();
-
-        //xOffset is either 0 or 8
-        int xOffset = (int) oscArgList.get(0);
-        int gridY = (int) oscArgList.get(1);
-
-        for (int i = 2; i < oscArgList.size(); i++) {
-            int ledState = (int) oscArgList.get(i);
-            setLEDLevelRow(xOffset, gridY, i-2, ledState);
-        }
+        setLEDLevelRow(oscArgList);
     }
 
-    public abstract void setLEDLevelRow(int xOffset, int gridY, int xCounter, int ledState);
+    public abstract void setLEDLevelRow(List oscList);
 }
-

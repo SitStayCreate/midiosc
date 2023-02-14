@@ -15,20 +15,22 @@ public class DecoratedOSCPortIn {
     }
 
     public DecoratedOSCPortIn(OSCPortIn oscPortIn, int portIn) throws IOException {
-        this.oscPortIn = oscPortIn;
-        this.portIn = portIn;
+        setOscPortIn(oscPortIn);
+        setPortIn(portIn);
     }
 
     public int getPortIn() {
         return portIn;
     }
 
-    //Call this when you need a new port
-    public void setPortIn(int portIn) throws IOException {
-        oscPortIn.disconnect();
-        oscPortIn.close();
-        oscPortIn = new OSCPortIn(portIn);
+    // This method stores the portIn number, it is called by the constructor
+    private void setPortIn(int portIn) {
         this.portIn = portIn;
+    }
+
+    //This method sets the OscPortIn, it is called by the constructor
+    private void setOscPortIn(OSCPortIn oscPortIn) throws IOException {
+        this.oscPortIn = oscPortIn;
     }
 
     //This method is needed to reduce coupling between the client and the decorated class

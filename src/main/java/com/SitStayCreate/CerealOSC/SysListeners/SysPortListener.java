@@ -18,6 +18,7 @@ public class SysPortListener implements OSCMessageListener {
 
     @Override
     public void acceptMessage(OSCMessageEvent event) {
+        System.out.println("SysPort Message Received");
         int targetPort = (int) event.getMessage().getArguments().get(0);
         System.out.println("targetPort: " + targetPort);
         try {

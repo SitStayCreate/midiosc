@@ -6,9 +6,9 @@ public class Dimensions {
     private boolean inverted;
 
     public Dimensions(int height, int width, boolean inverted){
-        this.height = height;
-        this.width = width;
-        this.inverted = inverted;
+        setHeight(height);
+        setWidth(width);
+        setInverted(inverted);
     }
 
     public int getArea(){

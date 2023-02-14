@@ -1,13 +1,16 @@
 package com.SitStayCreate.CerealOSC.MonomeDevice;
 
+import com.SitStayCreate.CerealOSC.MonomeApp.MonomeApp;
 import com.SitStayCreate.CerealOSC.OSC.DecoratedOSCPortIn;
 import com.SitStayCreate.CerealOSC.OSC.DecoratedOSCPortOut;
-import com.SitStayCreate.CerealOSC.MonomeApp.MonomeApp;
+import com.SitStayCreate.CerealOSC.RequestServer.RequestServer;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public abstract class MonomeController {
 
+    protected RequestServer requestServer;
     protected DecoratedOSCPortIn decoratedOSCPortIn;
     protected DecoratedOSCPortOut decoratedOSCPortOut;
     protected String id, prefix;
@@ -17,17 +20,24 @@ public abstract class MonomeController {
 
     public MonomeController(MonomeApp monomeApp,
                             DecoratedOSCPortIn decoratedOSCPortIn,
-                            DecoratedOSCPortOut decoratedOSCPortOut) {
+                            DecoratedOSCPortOut decoratedOSCPortOut,
+                            RequestServer requestServer) {
         this.monomeApp = monomeApp;
-        this.id = String.format("ssc-0%d", count);
-
-        this.decoratedOSCPortIn = decoratedOSCPortIn;
-        this.decoratedOSCPortOut = decoratedOSCPortOut;
+        setId(String.format("ssc-0%d", count));
+        // Dummy value - app can crash without this
+        setPrefix("/SSC");
+        setDecoratedOSCPortIn(decoratedOSCPortIn);
+        setDecoratedOSCPortOut(decoratedOSCPortOut);
+        setRequestServer(requestServer);
         count++;
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public MonomeApp getMonomeApp() {
@@ -43,7 +53,15 @@ public abstract class MonomeController {
         return decoratedOSCPortIn;
     }
 
+    private void setDecoratedOSCPortIn(DecoratedOSCPortIn decoratedOSCPortIn) {
+        this.decoratedOSCPortIn = decoratedOSCPortIn;
+    }
+
     public DecoratedOSCPortOut getDecoratedOSCPortOut() { return decoratedOSCPortOut;}
+
+    private void setDecoratedOSCPortOut(DecoratedOSCPortOut decoratedOSCPortOut) {
+        this.decoratedOSCPortOut = decoratedOSCPortOut;
+    }
 
     public String getPrefix() {
         return prefix;
@@ -53,7 +71,37 @@ public abstract class MonomeController {
         this.prefix = prefix;
     };
 
+    public RequestServer getRequestServer() {
+        return requestServer;
+    }
+
+    public void setRequestServer(RequestServer requestServer) {
+        this.requestServer = requestServer;
+    }
+
     public abstract void addSysListeners();
 
     public abstract void close();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MonomeController that = (MonomeController) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "MonomeController{" +
+                "id='" + id + '\'' +
+                ", prefix='" + prefix + '\'' +
+                ", monomeApp=" + monomeApp +
+                '}';
+    }
 }
